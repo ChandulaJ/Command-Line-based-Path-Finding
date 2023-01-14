@@ -2,7 +2,6 @@
 Shortest path
 
 Project Proporsal
-
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Project Title: Finding the shortest and quickest path in a given map
 
@@ -43,7 +42,6 @@ Objectives
 * Find the shortest route and quickest route to the destination on the given map
 * Calculate the time taken to reach the destination through the shortest route and the quickest route through different modes of transportation
 * Calculate the distance to the destination through the shortest route and the quickest route through different modes of transportation
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Instructions
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
