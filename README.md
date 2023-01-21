@@ -45,7 +45,8 @@ Objectives
 
 Instructions
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+* Insert the height and width repectively in the first line in map.txt which is inside the project folder
+* Insert the map to the same map.txt file
 * Run the project
-* Copy and paste all the content in the map.txt file and hit enter to input the map
 * Nodes corresponding to the shortest path will be highlighted in cyan (light blue) color
 * Maximum map size is 52 x 52
