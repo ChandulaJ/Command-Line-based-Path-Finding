@@ -45,7 +45,7 @@ Objectives
 
 Instructions
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-* Insert the height and width repectively in the first line in map.txt which is inside the project folder
+* Insert the height and width respectively in the first line in map.txt which is inside the project folder
 * Insert the map to the same map.txt file
 * Run the project
 * Nodes corresponding to the shortest path will be highlighted in cyan (light blue) color
