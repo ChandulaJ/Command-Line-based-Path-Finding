@@ -46,7 +46,6 @@ int main()
 
     //y = 43;
     //x = 30;
-    //testing
 
     /*
     int** mapArr = new int* [y];
