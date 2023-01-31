@@ -125,6 +125,36 @@ void deleteAt(int pos) {
 		size--;
 	}
 } 
+void search(int elem){
+			Node* temp9 = new Node;
+			int tem;
+
+			cout << "enter the index of the node :-" << endl;
+			cin >> tem;
+			Node* current = head;
+			for (int i = 0;i < tem - 1;i++) {
+				
+				if (tem == current->elem) {
+					cout << i << endl;
+				}
+				current = current->next;
+
+			}
+		
+
+
+		}
+void Print() {
+		Node* current = head;
+		cout << current->elem << "";
+		while (current != NULL)
+		{
+			cout << current->elem << " ";
+			current = current->next;
+		}
+	}
+};
+
 
 
 
