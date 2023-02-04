@@ -4,6 +4,7 @@
 #include <fstream> //library to get inputs from a file
 #include <vector>
 #include "Color.h" //header file to change the color in the terminal
+#include "Doubly_Linked_List.h"
 
 using namespace std;
 
@@ -339,4 +340,377 @@ void print_Map(vector<vector<int>> map, vector<Node*> nodes, string path) {
         }
         cout << endl;
     }
+}
+
+/*
+bool isNodeAvailable(int cval, int rval, vector<Node*> nodes) {
+    for (int i = 0; i < nodes.size(); i++) {
+        if (rval == nodes[i]->r && cval == nodes[i]->c) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+vector<Doubly_Linked_List> generateAdjList(vector<Node*> nodes, string path) {
+    ifstream fin(path);
+    int y, x;
+    fin >> y >> x;
+
+    //dynamic size 2d array for map
+    int** map = new int* [y];
+    for (int i = 0; i < y; i++) {
+        map[i] = new int[x];
+    }
+
+    //inserting elements to the map array
+    for (int i = 0; i < y; i++) {
+        for (int j = 0; j < x; j++) {
+            int d;
+            fin >> d;
+            map[i][j] = d;
+        }
+    }
+
+    vector<Doubly_Linked_List> AdjList;
+
+    //Doubly_Linked_List* AdjList = new Doubly_Linked_List[nodes.size()];
+
+    for (int i = 0; i < nodes.size(); i++) {
+        Doubly_Linked_List tempList;
+        tempList.insertFirst(nodes[i]->num);
+        AdjList.push_back(tempList);
+    }
+
+    //y downward direction traverse
+    for (int i = 0; i < nodes.size(); i++) {
+        int connectedNodeNumber;
+        Node* temp = nodes[i];
+        int xpos, ypos;
+        xpos = temp->c;
+        ypos = temp->r;
+
+        while (map[ypos][xpos] == 1) {
+            if (isNodeAvailable(ypos, xpos, nodes)) {
+                break;
+            }
+            ypos++;
+        }
+
+        for (int j = 0; j < nodes.size(); j++) {
+            if (nodes[j]->c == xpos && nodes[j]->r == ypos) {
+                connectedNodeNumber = nodes[j]->num;
+            }
+        }
+
+        for (int k = 0; k < nodes.size(); k++) {
+            for (int z = 0; nodes.size(); z++) {
+                if (AdjList[k].search(nodes[z]->num)) {
+                    AdjList[k].insertLast(connectedNodeNumber);
+                }
+            }
+        }
+    }
+
+    //y upward direction traverse
+    for (int i = 0; i < nodes.size(); i++) {
+        int connectedNodeNumber;
+        Node* temp = nodes[i];
+        int xpos, ypos;
+        xpos = temp->c;
+        ypos = temp->r;
+
+        while (map[ypos][xpos] == 1) {
+            if (isNodeAvailable(ypos, xpos, nodes)) {
+                break;
+            }
+            ypos--;
+        }
+
+        for (int j = 0; j < nodes.size(); j++) {
+            if (nodes[j]->c == xpos && nodes[j]->r == ypos) {
+                connectedNodeNumber = nodes[j]->num;
+            }
+        }
+
+        for (int k = 0; k < nodes.size(); k++) {
+            for (int z = 0; nodes.size(); z++) {
+                if (AdjList[k].search(nodes[z]->num)) {
+                    AdjList[k].insertLast(connectedNodeNumber);
+                }
+            }
+        }
+    }
+
+    //x rightward direction traverse
+    for (int i = 0; i < nodes.size(); i++) {
+        int connectedNodeNumber;
+        Node* temp = nodes[i];
+        int xpos, ypos;
+        ypos = temp->r;
+        xpos = temp->c;
+
+        while (map[ypos][xpos] == 1) {
+            if (isNodeAvailable(ypos, xpos, nodes)) {
+                break;
+            }
+            xpos++;
+        }
+
+        for (int j = 0; j < nodes.size(); j++) {
+            if (nodes[j]->c == xpos && nodes[j]->r == ypos) {
+                connectedNodeNumber = nodes[j]->num;
+            }
+        }
+
+        for (int k = 0; k < nodes.size(); k++) {
+            for (int z = 0; nodes.size(); z++) {
+                if (AdjList[k].search(nodes[z]->num)) {
+                    AdjList[k].insertLast(connectedNodeNumber);
+                }
+            }
+        }
+    }
+
+    //x leftward direction traverse
+    for (int i = 0; i < nodes.size(); i++) {
+        int connectedNodeNumber;
+        Node* temp = nodes[i];
+        int xpos, ypos;
+        ypos = temp->r;
+        xpos = temp->c;
+
+        while (map[ypos][xpos] == 1) {
+            if (isNodeAvailable(ypos, xpos, nodes)) {
+                break;
+            }
+            xpos--;
+        }
+
+        for (int j = 0; j < nodes.size(); j++) {
+            if (nodes[j]->c == xpos && nodes[j]->r == ypos) {
+                connectedNodeNumber = nodes[j]->num;
+            }
+        }
+
+        for (int k = 0; k < nodes.size(); k++) {
+            for (int z = 0; nodes.size(); z++) {
+                if (AdjList[k].search(nodes[z]->num)) {
+                    AdjList[k].insertLast(connectedNodeNumber);
+                }
+            }
+        }
+    }
+
+    return AdjList;
+}
+*/
+
+//automatic adjasancy list generation
+
+int horizontalFrontNodeConnection(vector<Node*> nodes, Node* node) {
+    vector<int> distances;
+
+    for (int j = 0; j < nodes.size(); j++) {
+        if ((node->r == nodes[j]->r) && (node->c < nodes[j]->c)) {
+            distances.push_back(nodes[j]->c - node->c);
+        }
+        else {
+            distances.push_back(INT32_MAX);
+        }
+    }
+
+    int min = *min_element(distances.begin(), distances.end());
+
+    return min;
+}
+
+int horizontalBackNodeConnection(vector<Node*> nodes, Node* node) {
+    vector<int> distances;
+
+    for (int j = 0; j < nodes.size(); j++) {
+        if ((node->r == nodes[j]->r) && (node->c > nodes[j]->c)) {
+            distances.push_back(node->c - nodes[j]->c);
+        }
+        else {
+            distances.push_back(INT32_MAX);
+        }
+    }
+
+    int min = *min_element(distances.begin(), distances.end());
+
+    return min;
+}
+
+int verticalDownNodeConnection(vector<Node*> nodes, Node* node) {
+    vector<int> distances;
+
+    for (int j = 0; j < nodes.size(); j++) {
+        if ((node->c == nodes[j]->c) && (node->r < nodes[j]->r)) {
+            distances.push_back(nodes[j]->r - node->r);
+        }
+        else {
+            distances.push_back(INT32_MAX);
+        }
+    }
+
+    int min = *min_element(distances.begin(), distances.end());
+
+    return min;
+}
+
+int verticalUpNodeConnection(vector<Node*> nodes, Node* node) {
+    vector<int> distances;
+
+    for (int j = 0; j < nodes.size(); j++) {
+        if ((node->c == nodes[j]->c) && (node->r > nodes[j]->r)) {
+            distances.push_back(node->r - nodes[j]->r);
+        }
+        else {
+            distances.push_back(INT32_MAX);
+        }
+    }
+
+    int min = *min_element(distances.begin(), distances.end());
+
+    return min;
+}
+
+vector<Doubly_Linked_List> generateAdjList(vector<Node*> nodes, string path) {
+    ifstream fin(path);
+    int y, x;
+    fin >> y >> x;
+
+    int** map = new int* [y];
+    for (int i = 0; i < y; i++) {
+        map[i] = new int[x];
+    }
+
+    for (int i = 0; i < y; i++) {
+        for (int j = 0; j < x; j++) {
+            int d;
+            fin >> d;
+            map[i][j] = d;
+        }
+    }
+
+    vector<Doubly_Linked_List> AdjList;
+
+    for (int i = 0; i < nodes.size(); i++) {
+        Doubly_Linked_List list;
+        list.insertFirst(nodes[i]->num);
+        AdjList.push_back(list);
+    }
+    
+    for (int i = 0; i < nodes.size(); i++) {
+        Node* temp = nodes[i];
+
+        int distFront = horizontalFrontNodeConnection(nodes, temp);
+        int distBack = horizontalBackNodeConnection(nodes, temp);
+        int distUp = verticalUpNodeConnection(nodes, temp);
+        int distDown = verticalDownNodeConnection(nodes, temp);
+
+        if (distFront == INT32_MAX) {
+            distFront = 0;
+        }
+        if (distBack == INT32_MAX) {
+            distBack = 0;
+        }
+        if (distUp == INT32_MAX) {
+            distUp = 0;
+        }
+        if (distDown == INT32_MAX) {
+            distDown = 0;
+        }
+
+        int connectedNodeNumber;
+        
+        //front
+        bool conditionFront = false;
+
+        for (int j = 0; j < distFront; j++) {
+            if (map[temp->r][temp->c + j] == 1) {
+                conditionFront = true;
+            }
+            else {
+                conditionFront = false;
+                break;
+            }
+        }
+        if (conditionFront) {
+            for (int j = 0; j < nodes.size(); j++) {
+                if (nodes[j]->c == nodes[i]->c + distFront && nodes[j]->r == nodes[i]->r) {
+                    connectedNodeNumber = nodes[j]->num;
+                    AdjList[nodes[i]->num].insertLast(connectedNodeNumber);
+                }
+            }
+        }
+        
+        //back
+        bool conditionBack = false;
+
+        for (int j = 0; j < distBack; j++) {
+            if (map[temp->r][temp->c - j] == 1) {
+                conditionBack = true;
+            }
+            else {
+                conditionBack = false;
+                break;
+            }
+        }
+        if (conditionBack) {
+            for (int j = 0; j < nodes.size(); j++) {
+                if (nodes[j]->c == nodes[i]->c - distBack && nodes[j]->r == nodes[i]->r) {
+                    connectedNodeNumber = nodes[j]->num;
+                    AdjList[nodes[i]->num].insertLast(connectedNodeNumber);
+                }
+            }
+        }
+        
+        //up
+        bool conditionUp = false;
+
+        for (int j = 0; j < distUp; j++) {
+            if (map[temp->r - j][temp->c] == 1) {
+                conditionUp = true;
+            }
+            else {
+                conditionUp = false;
+                break;
+            }
+        }
+        if (conditionUp) {
+            for (int j = 0; j < nodes.size(); j++) {
+                if (nodes[j]->r == nodes[i]->r - distUp && nodes[j]->c == nodes[i]->c) {
+                    connectedNodeNumber = nodes[j]->num;
+                    AdjList[nodes[i]->num].insertLast(connectedNodeNumber);
+                }
+            }
+        }
+        
+        //down
+        bool conditionDown = false;
+
+        for (int j = 0; j < distDown; j++) {
+            if (map[temp->r + j][temp->c] == 1) {
+                conditionDown = true;
+            }
+            else {
+                conditionDown = false;
+                break;
+            }
+        }
+        if (conditionDown) {
+            for (int j = 0; j < nodes.size(); j++) {
+                if (nodes[j]->r == nodes[i]->r + distDown && nodes[j]->c == nodes[i]->c) {
+                    connectedNodeNumber = nodes[j]->num;
+                    AdjList[nodes[i]->num].insertLast(connectedNodeNumber);
+                }
+            }
+        }
+    }
+
+    return AdjList;
 }

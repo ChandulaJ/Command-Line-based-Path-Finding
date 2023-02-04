@@ -4,20 +4,20 @@
 
 using namespace std;
 
-class Node
+class LNode
 {
 public:
 	int elem;
-	Node* next;
-	Node* prev;
+	LNode* next;
+	LNode* prev;
 
-	Node() {
+	LNode() {
 		elem = -1;
 		next = NULL;
 		prev = NULL;
 	}
 
-	Node(int val) {
+	LNode(int val) {
 		elem = val;
 		next = NULL;
 		prev = NULL;
@@ -27,8 +27,8 @@ public:
 class Doubly_Linked_List
 {
 private:
-	Node* head;
-	Node* tail;
+	LNode* head;
+	LNode* tail;
 	int size;
 
 public:
@@ -40,7 +40,7 @@ public:
 	}
 
 	void insertFirst(int val) {
-		Node* temp = new Node(val);
+		LNode* temp = new LNode(val);
 		if (head == NULL) {
 			head = temp;
 			tail = temp;
@@ -55,7 +55,7 @@ public:
 	}
 
 	void insertLast(int val) {
-		Node* temp = new Node(val);
+		LNode* temp = new LNode(val);
 		if (head == NULL) {
 			head == temp;
 			tail == temp;
@@ -80,8 +80,8 @@ public:
 			insertLast(elem);
 		}
 		else {
-			Node* temp = new Node(elem);
-			Node* current = head;
+			LNode* temp = new LNode(elem);
+			LNode* current = head;
 			for (int i = 0; i < pos - 1; i++) {
 				current = current->next;
 			}
@@ -99,7 +99,7 @@ public:
 			cout << "The list is empty" << endl;
 		}
 		else {
-			Node* temp = head;
+			LNode* temp = head;
 			if (size == 1) {
 				delete temp;
 				head = NULL;
@@ -120,7 +120,7 @@ public:
 			cout << "The list is empty" << endl;
 		}
 		else {
-			Node* temp = tail;
+			LNode* temp = tail;
 			if (size == 1) {
 				delete temp;
 				head = NULL;
@@ -147,11 +147,11 @@ public:
 			deleteLast();
 		}
 		else {
-			Node* current = head;
+			LNode* current = head;
 			for (int i = 0; i < pos - 1; i++) {
 				current = current->next;
 			}
-			Node* temp = current;
+			LNode* temp = current;
 			(current->prev)->next = temp->next;
 			(current->next)->prev = temp->prev;
 			delete temp;
@@ -159,22 +159,19 @@ public:
 		}
 	}
 
-	/*
-	void search(int elem) {
-		Node* temp = head;
+	bool search(int elem) {
+		LNode* temp = head;
 		while (temp != NULL) {
 			if (temp->elem == elem) {
-				cout << "Key found" << endl;
-				return;
+				//cout << "Key found" << endl;
+				return true;
 			}
 			temp = temp->next;
 		}
-		cout << "Key not found" << endl;
 	}
-	*/
 
 	void print() {
-		Node* current = head;
+		LNode* current = head;
 
 		while (current->next != NULL) {
 			cout << current->elem << " ";
