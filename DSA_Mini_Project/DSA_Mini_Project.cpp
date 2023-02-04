@@ -6,6 +6,7 @@
 #include <vector>
 #include "Color.h" //header file to change the color in the terminal
 #include "Functions.h"
+#include "Doubly_Linked_List.h"
 
 /*
 * Instructions :
@@ -92,6 +93,16 @@ int main()
 
     cout << endl;
 
+    /*
+    vector<Doubly_Linked_List> list;
+
+    list = generateAdjList(findNodes(path), path);
+
+    for (int i = 0; i < list.size(); i++) {
+        list[i].print();
+    }
+    */
+
     //displaying map for the user and getting inputs for starting point and destination point
     display_Map(map, findNodes(path), path);
 
@@ -99,6 +110,6 @@ int main()
     display_shorestpath();
 
     //displaying the shortest path in the map
-    print_Map(map, findNodes(path), path);
+    print_Map(map, findNodes(path), path); 
 }
 
