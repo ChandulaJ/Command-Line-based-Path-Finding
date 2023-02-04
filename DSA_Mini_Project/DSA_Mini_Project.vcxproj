@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h" />
+    <ClInclude Include="Doubly_Linked_List.h" />
     <ClInclude Include="Functions.h" />
   </ItemGroup>
   <ItemGroup>
