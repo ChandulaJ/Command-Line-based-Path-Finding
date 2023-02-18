@@ -510,6 +510,15 @@ vector<Doubly_Linked_List> generateAdjList(vector<Node*> nodes, string path) {
 
 //automatic adjasancy list generation
 
+void weightedGraphData(vector<Node*> nodes, int count) {
+    int numberofNodes = nodes.size();
+    int numberofEdges = count;
+
+    string path2 = "weightedGraphDetails.txt";
+    ofstream fout(path2);
+    fout << numberofNodes <<" " << numberofEdges << endl;
+}
+
 int horizontalFrontNodeConnection(vector<Node*> nodes, Node* node) {
     vector<int> distances;
 
@@ -596,7 +605,11 @@ vector<Doubly_Linked_List> generateAdjList(vector<Node*> nodes, string path) {
         }
     }
 
+    string path1 = "weightedGraph.txt";
+    ofstream fout(path1);
     vector<Doubly_Linked_List> AdjList;
+
+    int count = 0;
 
     for (int i = 0; i < nodes.size(); i++) {
         Doubly_Linked_List list;
@@ -644,6 +657,10 @@ vector<Doubly_Linked_List> generateAdjList(vector<Node*> nodes, string path) {
                 if (nodes[j]->c == nodes[i]->c + distFront && nodes[j]->r == nodes[i]->r) {
                     connectedNodeNumber = nodes[j]->num;
                     AdjList[nodes[i]->num].insertLast(connectedNodeNumber);
+
+                    fout << nodes[i]->num <<" " <<connectedNodeNumber << " " <<distFront << endl;
+
+                    count++;
                 }
             }
         }
@@ -665,6 +682,11 @@ vector<Doubly_Linked_List> generateAdjList(vector<Node*> nodes, string path) {
                 if (nodes[j]->c == nodes[i]->c - distBack && nodes[j]->r == nodes[i]->r) {
                     connectedNodeNumber = nodes[j]->num;
                     AdjList[nodes[i]->num].insertLast(connectedNodeNumber);
+
+                    //ofstream fout(path1);
+                    fout << nodes[i]->num << " " << connectedNodeNumber <<" " << distBack << endl;
+
+                    count++;
                 }
             }
         }
@@ -686,6 +708,11 @@ vector<Doubly_Linked_List> generateAdjList(vector<Node*> nodes, string path) {
                 if (nodes[j]->r == nodes[i]->r - distUp && nodes[j]->c == nodes[i]->c) {
                     connectedNodeNumber = nodes[j]->num;
                     AdjList[nodes[i]->num].insertLast(connectedNodeNumber);
+
+                    //ofstream fout(path1);
+                    fout << nodes[i]->num << " " << connectedNodeNumber << " " << distUp << endl;
+
+                    count++;
                 }
             }
         }
@@ -707,10 +734,17 @@ vector<Doubly_Linked_List> generateAdjList(vector<Node*> nodes, string path) {
                 if (nodes[j]->r == nodes[i]->r + distDown && nodes[j]->c == nodes[i]->c) {
                     connectedNodeNumber = nodes[j]->num;
                     AdjList[nodes[i]->num].insertLast(connectedNodeNumber);
+
+                    //ofstream fout(path1);
+                    fout << nodes[i]->num << " " << connectedNodeNumber << " " << distDown << endl;
+
+                    count++;
                 }
             }
         }
     }
+
+    weightedGraphData(nodes, count);
 
     return AdjList;
 }

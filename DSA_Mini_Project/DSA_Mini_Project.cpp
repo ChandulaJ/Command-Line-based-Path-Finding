@@ -93,14 +93,25 @@ int main()
 
     cout << endl;
 
-    /*
     vector<Doubly_Linked_List> list;
 
     list = generateAdjList(findNodes(path), path);
 
+    /*
     for (int i = 0; i < list.size(); i++) {
         list[i].print();
     }
+    */
+
+    /*
+    string path1 = "weightedGraph.txt";
+    ofstream fout(path1);
+
+    for (int i = 0; i < 10; i++) {
+        fout << 0 << endl;
+    }
+
+    fout << 1 << endl;
     */
 
     //displaying map for the user and getting inputs for starting point and destination point
@@ -110,6 +121,6 @@ int main()
     display_shorestpath();
 
     //displaying the shortest path in the map
-    print_Map(map, findNodes(path), path); 
+    print_Map(map, findNodes(path), path);
 }
 
