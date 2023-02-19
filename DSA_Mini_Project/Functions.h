@@ -5,6 +5,7 @@
 #include <vector>
 #include "Color.h" //header file to change the color in the terminal
 #include "Doubly_Linked_List.h"
+#include "Shortest_Path_Algo.h"
 
 using namespace std;
 
@@ -125,27 +126,42 @@ vector<Node*> findNodes(string path) {
 
 //function to display the shortest path
 //need the input from shortest path algorithm
-void display_shorestpath() {
+void display_shorestpath(vector<int> path) {
+
     //sample test output taken from the shortest path algorithm
-    vector<int> shortestPathNodes = { 0, 1, 2, 58, 59, 14, 3, 11, 74, 8 };
+    //vector<int> shortestPathNodes = { 0, 1, 2, 58, 59, 14, 3, 11, 74, 8 };
     //int shortestPathNodes[10] = { 0, 1, 2, 58, 59, 14, 3, 11, 74, 8 };
 
+    /*
     //user input of the starting node address
-    cout << "Enter the starting node : " << endl;
+    int start;
+    int end;
 
+    cout << "Enter the starting node : " << endl;
+    cin >> start;
     cout << endl;
 
     //user input of the destination node address
     cout << "Enter the destination node : " << endl;
-
+    cin >> end;
     cout << endl;
+    */
 
     cout << "===============================================================" << endl;
 
+    /*
+    vector<int> path = dijkstra(start, end, path1, path2);
+
+    //remember to implement sorting algoritm
+    std::sort(path.begin(), path.end());
+    auto last = std::unique(path.begin(), path.end());
+    path.erase(last, path.end());
+    */
+
     //displaying the shortest path node travese order
     cout << "Shortest path : ";
-    for (int i = 0; i < shortestPathNodes.size(); i++) {
-        cout << shortestPathNodes[i] << " > ";
+    for (int i = 0; i < path.size(); i++) {
+        cout << path[i] << " > ";
     }
     cout << endl;
 
@@ -181,6 +197,20 @@ vector<vector<char>> generateMap(vector<vector<int>> map, string path) {
     }
 
     return arr;
+}
+
+vector<int> getShortestPath(int start, int end) {
+    string path1 = "weightedGraphDetails.txt";
+    string path2 = "weightedGraph.txt";
+
+    vector<int> path = dijkstra(start, end, path1, path2);
+
+    //remember to implement sorting algoritm
+    std::sort(path.begin(), path.end());
+    auto last = std::unique(path.begin(), path.end());
+    path.erase(last, path.end());
+
+    return path;
 }
 
 //function for displaying map to the user to get the input for start and the destination
@@ -248,12 +278,41 @@ void display_Map(vector<vector<int>> map, vector<Node*> nodes, string path) {
 
     cout << "===============================================================" << endl;
 
+    cout << "Index List of the Vertices" << endl;
+
+    cout << endl;
+    
+    for (int i = 0; i < nodes.size(); i++) {
+        char indexHorizontal = 65;
+        char indexVertical = 65;
+
+        indexHorizontal = indexHorizontal + nodes[i]->c - 1;
+
+        if (indexHorizontal > 90 && indexHorizontal < 97) {
+            int diffh = indexHorizontal - 90;
+            indexHorizontal = 97 + diffh-1;
+        }
+
+        indexVertical = indexVertical + nodes[i]->r - 1;
+
+        if (indexVertical > 90 && indexVertical < 97 || indexVertical>96) {
+            int diffv = indexVertical - 90;
+            indexVertical = 97 + diffv - 1;
+        }
+
+        cout << nodes[i]->num << "\t=>\t" << indexVertical << " , " << indexHorizontal << endl;
+    }
+
+    cout << endl;
+
+    cout << "===============================================================" << endl;
+
     cout << endl;
 }
 
 //function to print the shortest path
 //need an input from the shortest path algorithm as an array
-void print_Map(vector<vector<int>> map, vector<Node*> nodes, string path) {
+void print_Map(vector<vector<int>> map, vector<Node*> nodes, string path, vector<int> shortestPathNodes) {
     //array to store the nodes in the graph
     //Node* nodes[92];
 
@@ -285,7 +344,8 @@ void print_Map(vector<vector<int>> map, vector<Node*> nodes, string path) {
 
     //sample test output taken from the shortest path algorithm
     //int shortestPathNodes[10] = { 0, 1, 2, 58, 59, 14, 3, 11, 74, 8 };
-    vector<int> shortestPathNodes = { 0, 1, 2, 58, 59, 14, 3, 11, 74, 8 };
+    //vector<int> shortestPathNodes = { 0, 1, 2, 58, 59, 14, 3, 11, 74, 8 };
+    //vector<int> shortestPathNodes = path;
 
     //printing the map
     char indexv2 = 65;

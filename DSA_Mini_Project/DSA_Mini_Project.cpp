@@ -97,6 +97,22 @@ int main()
 
     list = generateAdjList(findNodes(path), path);
 
+    //displaying map for the user and getting inputs for starting point and destination point
+    display_Map(map, findNodes(path), path);
+
+    //user input of the starting node address
+    int start;
+    int end;
+
+    cout << "Enter the starting node : ";
+    cin >> start;
+    cout << endl;
+
+    //user input of the destination node address
+    cout << "Enter the destination node : ";
+    cin >> end;
+    cout << endl;
+
     /*
     for (int i = 0; i < list.size(); i++) {
         list[i].print();
@@ -114,13 +130,10 @@ int main()
     fout << 1 << endl;
     */
 
-    //displaying map for the user and getting inputs for starting point and destination point
-    display_Map(map, findNodes(path), path);
-
     //displaying the shortest path
-    display_shorestpath();
+    display_shorestpath(getShortestPath(start, end));
 
     //displaying the shortest path in the map
-    print_Map(map, findNodes(path), path);
+    print_Map(map, findNodes(path), path, getShortestPath(start, end));
 }
 
