@@ -163,7 +163,6 @@ public:
 		LNode* temp = head;
 		while (temp != NULL) {
 			if (temp->elem == elem) {
-				//cout << "Key found" << endl;
 				return true;
 			}
 			temp = temp->next;

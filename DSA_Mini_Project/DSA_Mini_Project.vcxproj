@@ -133,6 +133,8 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Doubly_Linked_List.h" />
     <ClInclude Include="Functions.h" />
+    <ClInclude Include="MinHeapDS.h" />
+    <ClInclude Include="myvector.h" />
     <ClInclude Include="Shortest_Path_Algo.h" />
   </ItemGroup>
   <ItemGroup>
