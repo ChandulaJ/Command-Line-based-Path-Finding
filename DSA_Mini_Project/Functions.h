@@ -125,38 +125,8 @@ vector<Node*> findNodes(string path) {
 }
 
 //function to display the shortest path
-//need the input from shortest path algorithm
 void display_shorestpath(vector<int> path) {
-
-    //sample test output taken from the shortest path algorithm
-    //vector<int> shortestPathNodes = { 0, 1, 2, 58, 59, 14, 3, 11, 74, 8 };
-    //int shortestPathNodes[10] = { 0, 1, 2, 58, 59, 14, 3, 11, 74, 8 };
-
-    /*
-    //user input of the starting node address
-    int start;
-    int end;
-
-    cout << "Enter the starting node : " << endl;
-    cin >> start;
-    cout << endl;
-
-    //user input of the destination node address
-    cout << "Enter the destination node : " << endl;
-    cin >> end;
-    cout << endl;
-    */
-
     cout << "===============================================================" << endl;
-
-    /*
-    vector<int> path = dijkstra(start, end, path1, path2);
-
-    //remember to implement sorting algoritm
-    std::sort(path.begin(), path.end());
-    auto last = std::unique(path.begin(), path.end());
-    path.erase(last, path.end());
-    */
 
     //displaying the shortest path node travese order
     cout << "Shortest path : ";
@@ -205,7 +175,6 @@ vector<int> getShortestPath(int start, int end) {
 
     vector<int> path = dijkstra(start, end, path1, path2);
 
-    //remember to implement sorting algoritm
     //sorting algorithm to sort the path vector
     for (int step = 1; step < path.size(); step++) {
         int key = path[step];
@@ -238,35 +207,11 @@ int getShortestDistance(int start, int end) {
 
 //function for displaying map to the user to get the input for start and the destination
 void display_Map(vector<vector<int>> map, vector<Node*> nodes, string path) {
-    //array to store the nodes in the graph
-    //Node* nodes[92];
-
-    //character array for displaying the map
-    //char arr[43][30];
-    
     ifstream fin(path);
     int y, x;
     fin >> y >> x;
 
     vector<vector<char>> arr = generateMap(map, path);
-
-    /*
-    for (int i = 0; i < y; i++) {
-        for (int j = 0; j < x; j++) {
-            if (map[i][j] == 1) {
-                arr[i][j] = '.';
-            }
-            else {
-                arr[i][j] = ' ';
-            }
-        }
-    }
-
-    //inserting + signs for the nodes
-    for (int i = 0; i < nodes.size(); i++) {
-        arr[nodes[i]->r][nodes[i]->c] = '+';
-    }
-    */
 
     //printing the map to display the node addresses to the user
     char indexv1 = 65;
@@ -334,41 +279,12 @@ void display_Map(vector<vector<int>> map, vector<Node*> nodes, string path) {
 }
 
 //function to print the shortest path
-//need an input from the shortest path algorithm as an array
 void print_Map(vector<vector<int>> map, vector<Node*> nodes, string path, vector<int> shortestPathNodes) {
-    //array to store the nodes in the graph
-    //Node* nodes[92];
-
-    //character array for displaying the map
-    //char arr[43][30];
     ifstream fin(path);
     int y, x;
     fin >> y >> x;
 
     vector<vector<char>> arr = generateMap(map, path);
-
-    /*
-    for (int i = 0; i < y; i++) {
-        for (int j = 0; j < x; j++) {
-            if (map[i][j] == 1) {
-                arr[i][j] = '.';
-            }
-            else {
-                arr[i][j] = ' ';
-            }
-        }
-    }
-
-    //inserting + signs for the nodes
-    for (int i = 0; i < nodes.size(); i++) {
-        arr[nodes[i]->r][nodes[i]->c] = '+';
-    }
-    */
-
-    //sample test output taken from the shortest path algorithm
-    //int shortestPathNodes[10] = { 0, 1, 2, 58, 59, 14, 3, 11, 74, 8 };
-    //vector<int> shortestPathNodes = { 0, 1, 2, 58, 59, 14, 3, 11, 74, 8 };
-    //vector<int> shortestPathNodes = path;
 
     //printing the map
     char indexv2 = 65;
@@ -424,172 +340,6 @@ void print_Map(vector<vector<int>> map, vector<Node*> nodes, string path, vector
         cout << endl;
     }
 }
-
-/*
-bool isNodeAvailable(int cval, int rval, vector<Node*> nodes) {
-    for (int i = 0; i < nodes.size(); i++) {
-        if (rval == nodes[i]->r && cval == nodes[i]->c) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-}
-
-vector<Doubly_Linked_List> generateAdjList(vector<Node*> nodes, string path) {
-    ifstream fin(path);
-    int y, x;
-    fin >> y >> x;
-
-    //dynamic size 2d array for map
-    int** map = new int* [y];
-    for (int i = 0; i < y; i++) {
-        map[i] = new int[x];
-    }
-
-    //inserting elements to the map array
-    for (int i = 0; i < y; i++) {
-        for (int j = 0; j < x; j++) {
-            int d;
-            fin >> d;
-            map[i][j] = d;
-        }
-    }
-
-    vector<Doubly_Linked_List> AdjList;
-
-    //Doubly_Linked_List* AdjList = new Doubly_Linked_List[nodes.size()];
-
-    for (int i = 0; i < nodes.size(); i++) {
-        Doubly_Linked_List tempList;
-        tempList.insertFirst(nodes[i]->num);
-        AdjList.push_back(tempList);
-    }
-
-    //y downward direction traverse
-    for (int i = 0; i < nodes.size(); i++) {
-        int connectedNodeNumber;
-        Node* temp = nodes[i];
-        int xpos, ypos;
-        xpos = temp->c;
-        ypos = temp->r;
-
-        while (map[ypos][xpos] == 1) {
-            if (isNodeAvailable(ypos, xpos, nodes)) {
-                break;
-            }
-            ypos++;
-        }
-
-        for (int j = 0; j < nodes.size(); j++) {
-            if (nodes[j]->c == xpos && nodes[j]->r == ypos) {
-                connectedNodeNumber = nodes[j]->num;
-            }
-        }
-
-        for (int k = 0; k < nodes.size(); k++) {
-            for (int z = 0; nodes.size(); z++) {
-                if (AdjList[k].search(nodes[z]->num)) {
-                    AdjList[k].insertLast(connectedNodeNumber);
-                }
-            }
-        }
-    }
-
-    //y upward direction traverse
-    for (int i = 0; i < nodes.size(); i++) {
-        int connectedNodeNumber;
-        Node* temp = nodes[i];
-        int xpos, ypos;
-        xpos = temp->c;
-        ypos = temp->r;
-
-        while (map[ypos][xpos] == 1) {
-            if (isNodeAvailable(ypos, xpos, nodes)) {
-                break;
-            }
-            ypos--;
-        }
-
-        for (int j = 0; j < nodes.size(); j++) {
-            if (nodes[j]->c == xpos && nodes[j]->r == ypos) {
-                connectedNodeNumber = nodes[j]->num;
-            }
-        }
-
-        for (int k = 0; k < nodes.size(); k++) {
-            for (int z = 0; nodes.size(); z++) {
-                if (AdjList[k].search(nodes[z]->num)) {
-                    AdjList[k].insertLast(connectedNodeNumber);
-                }
-            }
-        }
-    }
-
-    //x rightward direction traverse
-    for (int i = 0; i < nodes.size(); i++) {
-        int connectedNodeNumber;
-        Node* temp = nodes[i];
-        int xpos, ypos;
-        ypos = temp->r;
-        xpos = temp->c;
-
-        while (map[ypos][xpos] == 1) {
-            if (isNodeAvailable(ypos, xpos, nodes)) {
-                break;
-            }
-            xpos++;
-        }
-
-        for (int j = 0; j < nodes.size(); j++) {
-            if (nodes[j]->c == xpos && nodes[j]->r == ypos) {
-                connectedNodeNumber = nodes[j]->num;
-            }
-        }
-
-        for (int k = 0; k < nodes.size(); k++) {
-            for (int z = 0; nodes.size(); z++) {
-                if (AdjList[k].search(nodes[z]->num)) {
-                    AdjList[k].insertLast(connectedNodeNumber);
-                }
-            }
-        }
-    }
-
-    //x leftward direction traverse
-    for (int i = 0; i < nodes.size(); i++) {
-        int connectedNodeNumber;
-        Node* temp = nodes[i];
-        int xpos, ypos;
-        ypos = temp->r;
-        xpos = temp->c;
-
-        while (map[ypos][xpos] == 1) {
-            if (isNodeAvailable(ypos, xpos, nodes)) {
-                break;
-            }
-            xpos--;
-        }
-
-        for (int j = 0; j < nodes.size(); j++) {
-            if (nodes[j]->c == xpos && nodes[j]->r == ypos) {
-                connectedNodeNumber = nodes[j]->num;
-            }
-        }
-
-        for (int k = 0; k < nodes.size(); k++) {
-            for (int z = 0; nodes.size(); z++) {
-                if (AdjList[k].search(nodes[z]->num)) {
-                    AdjList[k].insertLast(connectedNodeNumber);
-                }
-            }
-        }
-    }
-
-    return AdjList;
-}
-*/
 
 //automatic adjasancy list generation
 
