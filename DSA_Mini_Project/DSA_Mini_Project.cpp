@@ -135,5 +135,8 @@ int main()
 
     //displaying the shortest path in the map
     print_Map(map, findNodes(path), path, getShortestPath(start, end));
+
+    //display the information regarding the shortest path to the user
+    printInfo(getShortestDistance(start, end));
 }
 
