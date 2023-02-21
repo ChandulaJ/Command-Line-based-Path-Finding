@@ -206,11 +206,34 @@ vector<int> getShortestPath(int start, int end) {
     vector<int> path = dijkstra(start, end, path1, path2);
 
     //remember to implement sorting algoritm
-    std::sort(path.begin(), path.end());
+    //sorting algorithm to sort the path vector
+    for (int step = 1; step < path.size(); step++) {
+        int key = path[step];
+
+        int j = step - 1;
+
+        while (j >= 0 && key < path[j]) {
+            path[j + 1] = path[j];
+            j--;
+        }
+
+        path[j + 1] = key;
+    }
+
+    //std::sort(path.begin(), path.end());
     auto last = std::unique(path.begin(), path.end());
     path.erase(last, path.end());
 
     return path;
+}
+
+int getShortestDistance(int start, int end) {
+    string path1 = "weightedGraphDetails.txt";
+    string path2 = "weightedGraph.txt";
+
+    int distance = dijkstraForDistance(start, end, path1, path2);
+
+    return distance;
 }
 
 //function for displaying map to the user to get the input for start and the destination
@@ -300,7 +323,7 @@ void display_Map(vector<vector<int>> map, vector<Node*> nodes, string path) {
             indexVertical = 97 + diffv - 1;
         }
 
-        cout << nodes[i]->num << "\t=>\t" << indexVertical << " , " << indexHorizontal << endl;
+        cout << indexVertical << " , " << indexHorizontal << "\t=>\t" << nodes[i]->num << endl;
     }
 
     cout << endl;
@@ -807,4 +830,56 @@ vector<Doubly_Linked_List> generateAdjList(vector<Node*> nodes, string path) {
     weightedGraphData(nodes, count);
 
     return AdjList;
+}
+
+void printInfo(int distance) {
+    cout << "===============================================================" << endl;
+
+    cout << endl;
+
+    cout << "Travelling Speeds" << endl;
+    cout << endl;
+    cout << "Default Speed \t=>\t 50 km/h" << endl;
+    cout << "Motor Cycle \t=>\t 40 km/h" << endl;
+    cout << "Motor Cycle \t=>\t 60 km/h" << endl;
+
+    double time;
+    int speed;
+    int unitLength;
+
+    cout << endl;
+
+    cout << "Enter the unit length of the inserted map in meters: ";
+    cin >> unitLength;
+
+    cout << endl;
+
+    cout << "Enter the travelling speed : ";
+    cin >> speed;
+
+    if (speed != 40 && speed != 60) {
+        speed = 50;
+    }
+
+    double dist = distance* unitLength;
+
+    double distinKilometers = dist / 1000;
+
+    time = (distinKilometers / speed)*60;
+
+    cout << endl;
+
+    cout << "Travel Distance (in meters)\t\t: " << distance*unitLength << " m" << endl;
+
+    cout << endl;
+
+    cout << "Approximate Travel Time (in minutes) \t: " << time << " minutes" << endl;
+
+    cout << endl;
+
+    cout << "Approximate Travel Time (in seconds) \t: " << time*60 << " seconds" << endl;
+
+    cout << endl;
+
+    cout << "===============================================================" << endl;
 }
